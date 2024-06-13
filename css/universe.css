@@ -1,5 +1,5 @@
 /* 夜间模式下背景宇宙星光 */
-#universe {  
+[data-theme="dark"] #universe {  
     display: block;
     position: fixed;
     margin: 0;
@@ -13,7 +13,33 @@
     pointer-events: none;
     z-index: 1;
 }
-/* 亮色模式下隐藏 */
-[data-theme='light'] #universe {
+
+/* 亮色模式下隐藏宇宙星光背景 */
+[data-theme="light"] #universe {
     display: none;
+}
+
+/* 夜间模式下文章页背景 */
+[data-theme="dark"] .layout_post>#post {
+    background: rgba(18,18,18,1);
+}
+
+/* 夜间模式下所有页面背景 */
+[data-theme="dark"] #aside_content .card-widget,
+[data-theme="dark"] #recent-posts>.recent-post-item,
+[data-theme="dark"] .layout_page>div:first-child:not(.recent-posts),
+[data-theme="dark"] .layout_post>#page,
+[data-theme="dark"] .layout_post>#post,
+[data-theme="dark"] .read-mode .layout_post>#post {
+    background: rgba(18,18,18,1);
+}
+
+/* 夜间模式下侧边卡片的透明度 */
+[data-theme="dark"] :root {
+    --card-bg: rgba(18,18,18,1);
+}
+
+/* 夜间模式下页脚透明 */
+[data-theme="dark"] #footer {
+    background: rgba(18,18,18,1);
 }

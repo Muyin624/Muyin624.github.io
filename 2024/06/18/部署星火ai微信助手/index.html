@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>部署星火ai微信助手 | Muyin的博客</title><meta name="author" content="Muyin"><meta name="copyright" content="Muyin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言注：必须并且只要有自己的一个域名（阿里云等平台新用户一元即可） 基于vercel的serverless服务，把星火认知大模型接入微信公众号1、用户通过个人公众号，输入对话内容2、通过公众号服务器配置地址进行请求访问，此处的地址需要使用自己的个人域名3、通过地址请求到使用vercel.com4、最终请求到讯飞星火模型接口  部署流程(申请大模型,公众号需自行搜索)注册星火认知大模型，创建一个应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部署星火ai微信助手">
+<meta property="og:url" content="http://yoursite.com/2024/06/18/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/index.html">
+<meta property="og:site_name" content="Muyin的博客">
+<meta property="og:description" content="前言注：必须并且只要有自己的一个域名（阿里云等平台新用户一元即可） 基于vercel的serverless服务，把星火认知大模型接入微信公众号1、用户通过个人公众号，输入对话内容2、通过公众号服务器配置地址进行请求访问，此处的地址需要使用自己的个人域名3、通过地址请求到使用vercel.com4、最终请求到讯飞星火模型接口  部署流程(申请大模型,公众号需自行搜索)注册星火认知大模型，创建一个应用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/img/defaultText.jpg">
+<meta property="article:published_time" content="2024-06-17T23:18:40.000Z">
+<meta property="article:modified_time" content="2024-06-18T05:13:05.438Z">
+<meta property="article:author" content="Muyin">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="星火讯飞大模型">
+<meta property="article:tag" content="微信公众号">
+<meta property="article:tag" content="vercel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/img/defaultText.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/2024/06/18/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Muyin","link":"链接: ","source":"来源: Muyin的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '部署星火ai微信助手',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-06-18 13:13:05'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="/css/universe.css"><meta name="generator" content="Hexo 7.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/images/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/defaultText.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Muyin的博客"><span class="site-name">Muyin的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">部署星火ai微信助手</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-06-17T23:18:40.000Z" title="发表于 2024-06-18 07:18:40">2024-06-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">360</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="部署星火ai微信助手"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h2 id="注：必须并且只要有自己的一个域名（阿里云等平台新用户一元即可）"><a href="#注：必须并且只要有自己的一个域名（阿里云等平台新用户一元即可）" class="headerlink" title="注：必须并且只要有自己的一个域名（阿里云等平台新用户一元即可）"></a><code>注：必须并且只要有自己的一个域名（阿里云等平台新用户一元即可）</code></h2><blockquote>
+<p>基于vercel的serverless服务，把星火认知大模型接入微信公众号<br>1、用户通过个人公众号，输入对话内容<br>2、通过公众号服务器配置地址进行请求访问，此处的地址需要使用自己的个人域名<br>3、通过地址请求到使用vercel.com<br>4、最终请求到讯飞星火模型接口</p>
+</blockquote>
+<h1 id="部署流程-申请大模型-公众号需自行搜索"><a href="#部署流程-申请大模型-公众号需自行搜索" class="headerlink" title="部署流程(申请大模型,公众号需自行搜索)"></a>部署流程(申请大模型,公众号需自行搜索)</h1><h2 id="注册星火认知大模型，创建一个应用"><a href="#注册星火认知大模型，创建一个应用" class="headerlink" title="注册星火认知大模型，创建一个应用"></a>注册<a href="https://xinghuo.xfyun.cn/sparkapi">星火认知大模型</a>，创建一个应用</h2><p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E7%99%BB%E5%BD%95%E5%85%8D%E8%B4%B9%E8%AF%95%E7%94%A8.png" alt="登录/免费试用"></p>
+<h2 id="创建完成后进入服务管理页面"><a href="#创建完成后进入服务管理页面" class="headerlink" title="创建完成后进入服务管理页面"></a>创建完成后进入服务管理页面</h2><p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86.png" alt="服务管理"></p>
+<h2 id="查找-APPID，APISecret，APIKey"><a href="#查找-APPID，APISecret，APIKey" class="headerlink" title="查找 APPID，APISecret，APIKey"></a>查找 APPID，APISecret，APIKey</h2><p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2.png" alt="服务管理页面"></p>
+<h2 id="购买域名-举例阿里云"><a href="#购买域名-举例阿里云" class="headerlink" title="购买域名(举例阿里云)"></a>购买域名(举例<a href="https://dc.console.aliyun.com/next/index#/domain-list/all">阿里云</a>)</h2><p>我的是.xyz,9元一年</p>
+<p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E5%9F%9F%E5%90%8D.png" alt="域名"></p>
+<h2 id="微信公众平台设置"><a href="#微信公众平台设置" class="headerlink" title="微信公众平台设置"></a><a href="https://mp.weixin.qq.com/">微信公众平台</a>设置</h2><p>进入微信公众平台</p>
+<p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0.png" alt="微信公众平台"></p>
+<h3 id="url"><a href="#url" class="headerlink" title="url"></a>url</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">https://你的域名/api/spark-wechat</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="token"><a href="#token" class="headerlink" title="token"></a>token</h3><p><code>TOKEN</code>是自定义的，随便编一个，但需要与下文中的<code>TOKEN</code>保持一致</p>
+<h3 id="EncodingAESKey，为前面项目配置中设置的参数"><a href="#EncodingAESKey，为前面项目配置中设置的参数" class="headerlink" title="EncodingAESKey，为前面项目配置中设置的参数"></a>EncodingAESKey，为前面项目配置中设置的参数</h3><p>点击后面的<code>随机生成</code>即可</p>
+<h3 id="消息加解密方式"><a href="#消息加解密方式" class="headerlink" title="消息加解密方式"></a>消息加解密方式</h3><p>选择<code>明文模式</code></p>
+<h3 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h3><p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0%E8%AE%BE%E7%BD%AE.png" alt="微信公众平台设置"></p>
+<h3 id="先不要提交，提交会校验TOKEN，接下来我们才会开始部署"><a href="#先不要提交，提交会校验TOKEN，接下来我们才会开始部署" class="headerlink" title="先不要提交，提交会校验TOKEN，接下来我们才会开始部署"></a>先<code>不要提交</code>，提交会校验TOKEN，接下来我们才会开始部署</h3><h2 id="Vercel-部署"><a href="#Vercel-部署" class="headerlink" title="Vercel 部署"></a>Vercel 部署</h2><h3 id="以个人开发者名义进行注册并登录"><a href="#以个人开发者名义进行注册并登录" class="headerlink" title="以个人开发者名义进行注册并登录"></a>以个人开发者名义进行注册并登录</h3><p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E8%BF%9B%E5%85%A5%E4%BB%AA%E8%A1%A8%E7%9B%98.png" alt="进入仪表盘"></p>
+<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE.png" alt="创建项目"></p>
+<h3 id="引入大佬开源的-Github-项目地址"><a href="#引入大佬开源的-Github-项目地址" class="headerlink" title="引入大佬开源的 Github 项目地址"></a>引入大佬开源的 Github 项目地址</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">https://github.com/itdebug/vercel-xinghuo-bot</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E5%BC%95%E5%85%A5%E5%9C%B0%E5%9D%80.png" alt="引入地址"></p>
+<p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E5%A1%AB%E5%85%A5%E5%9C%B0%E5%9D%80.png" alt="填入地址"></p>
+<p>我用的项目名称是<code>vercel-wxxinghuo-bot</code></p>
+<p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E5%A1%AB%E5%85%A5%E9%A1%B9%E7%9B%AE%E5%90%8D%E7%A7%B0.png" alt="填入项目名称"></p>
+<p>等待一会~</p>
+<p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E7%AD%89%E5%BE%85.png" alt="等待"></p>
+<p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E8%B7%B3%E8%BD%AC.png" alt="跳转"></p>
+<p><img src="/img/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/%E8%BF%9B%E5%85%A5%E8%AE%BE%E7%BD%AE.png" alt="进入设置"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://yoursite.com">Muyin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2024/06/18/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/">http://yoursite.com/2024/06/18/部署星火ai微信助手/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">Muyin的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0/">学习</a><a class="post-meta__tags" href="/tags/%E6%98%9F%E7%81%AB%E8%AE%AF%E9%A3%9E%E5%A4%A7%E6%A8%A1%E5%9E%8B/">星火讯飞大模型</a><a class="post-meta__tags" href="/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/">微信公众号</a><a class="post-meta__tags" href="/tags/vercel/">vercel</a></div><div class="post_share"><div class="social-share" data-image="/img/defaultText.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat_pay.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat_pay.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/ali_pay.png" target="_blank"><img class="post-qr-code-img" src="/img/ali_pay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/06/15/androidStudio%E7%9A%84%E6%90%AD%E5%BB%BA/" title="androidStudio的搭建"><img class="cover" src="https://www.gstatic.cn/devrel-devsite/prod/vcb16788a46369f41192d8988c5149cea86bddfebb91a7fb85ede926f44da4a35/android/images/lockup.svg" onerror="onerror=null;src='/images/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">androidStudio的搭建</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/05/25/Butterfly%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/" title="hexo详细配置(Butterfly主题)"><img class="cover" src="/img/Butterfly%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-25</div><div class="title">hexo详细配置(Butterfly主题)</div></div></a></div><div><a href="/2024/06/15/androidStudio%E7%9A%84%E6%90%AD%E5%BB%BA/" title="androidStudio的搭建"><img class="cover" src="https://www.gstatic.cn/devrel-devsite/prod/vcb16788a46369f41192d8988c5149cea86bddfebb91a7fb85ede926f44da4a35/android/images/lockup.svg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-15</div><div class="title">androidStudio的搭建</div></div></a></div><div><a href="/2024/06/07/SVG%E5%AD%A6%E4%B9%A0/" title="SVG学习"><div class="cover" style="background: blue"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-07</div><div class="title">SVG学习</div></div></a></div><div><a href="/2024/06/12/butterfly%E6%B7%B1%E8%89%B2%E6%A8%A1%E5%BC%8F%E8%83%8C%E6%99%AF%E7%BE%8E%E5%8C%96/" title="butterfly深色模式背景美化"><img class="cover" src="https://s.cn.bing.net/th?id=OHR.BigBendMilkyWay_ZH-CN7709015605_1920x1080.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-12</div><div class="title">butterfly深色模式背景美化</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/images/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Muyin</div><div class="author-info__description">还有好多,慢慢写吧</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Muyin624/Muyin624.github.io" target="_blank" title="Github|yellow"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:muyin624@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://wx.mail.qq.com" target="_blank" title="3389609979"><i class="fa-brands fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%EF%BC%9A%E5%BF%85%E9%A1%BB%E5%B9%B6%E4%B8%94%E5%8F%AA%E8%A6%81%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9F%9F%E5%90%8D%EF%BC%88%E9%98%BF%E9%87%8C%E4%BA%91%E7%AD%89%E5%B9%B3%E5%8F%B0%E6%96%B0%E7%94%A8%E6%88%B7%E4%B8%80%E5%85%83%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">注：必须并且只要有自己的一个域名（阿里云等平台新用户一元即可）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B-%E7%94%B3%E8%AF%B7%E5%A4%A7%E6%A8%A1%E5%9E%8B-%E5%85%AC%E4%BC%97%E5%8F%B7%E9%9C%80%E8%87%AA%E8%A1%8C%E6%90%9C%E7%B4%A2"><span class="toc-number">2.</span> <span class="toc-text">部署流程(申请大模型,公众号需自行搜索)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E6%98%9F%E7%81%AB%E8%AE%A4%E7%9F%A5%E5%A4%A7%E6%A8%A1%E5%9E%8B%EF%BC%8C%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">注册星火认知大模型，创建一个应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%8C%E6%88%90%E5%90%8E%E8%BF%9B%E5%85%A5%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2"><span class="toc-number">2.2.</span> <span class="toc-text">创建完成后进入服务管理页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE-APPID%EF%BC%8CAPISecret%EF%BC%8CAPIKey"><span class="toc-number">2.3.</span> <span class="toc-text">查找 APPID，APISecret，APIKey</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E5%9F%9F%E5%90%8D-%E4%B8%BE%E4%BE%8B%E9%98%BF%E9%87%8C%E4%BA%91"><span class="toc-number">2.4.</span> <span class="toc-text">购买域名(举例阿里云)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.5.</span> <span class="toc-text">微信公众平台设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#url"><span class="toc-number">2.5.1.</span> <span class="toc-text">url</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#token"><span class="toc-number">2.5.2.</span> <span class="toc-text">token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EncodingAESKey%EF%BC%8C%E4%B8%BA%E5%89%8D%E9%9D%A2%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E4%B8%AD%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-number">2.5.3.</span> <span class="toc-text">EncodingAESKey，为前面项目配置中设置的参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E5%8A%A0%E8%A7%A3%E5%AF%86%E6%96%B9%E5%BC%8F"><span class="toc-number">2.5.4.</span> <span class="toc-text">消息加解密方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%A4%BA"><span class="toc-number">2.5.5.</span> <span class="toc-text">图示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E4%B8%8D%E8%A6%81%E6%8F%90%E4%BA%A4%EF%BC%8C%E6%8F%90%E4%BA%A4%E4%BC%9A%E6%A0%A1%E9%AA%8CTOKEN%EF%BC%8C%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%88%91%E4%BB%AC%E6%89%8D%E4%BC%9A%E5%BC%80%E5%A7%8B%E9%83%A8%E7%BD%B2"><span class="toc-number">2.5.6.</span> <span class="toc-text">先不要提交，提交会校验TOKEN，接下来我们才会开始部署</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vercel-%E9%83%A8%E7%BD%B2"><span class="toc-number">2.6.</span> <span class="toc-text">Vercel 部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E4%B8%AA%E4%BA%BA%E5%BC%80%E5%8F%91%E8%80%85%E5%90%8D%E4%B9%89%E8%BF%9B%E8%A1%8C%E6%B3%A8%E5%86%8C%E5%B9%B6%E7%99%BB%E5%BD%95"><span class="toc-number">2.6.1.</span> <span class="toc-text">以个人开发者名义进行注册并登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.6.2.</span> <span class="toc-text">创建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%A4%A7%E4%BD%AC%E5%BC%80%E6%BA%90%E7%9A%84-Github-%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80"><span class="toc-number">2.6.3.</span> <span class="toc-text">引入大佬开源的 Github 项目地址</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/06/18/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/" title="部署星火ai微信助手"><img src="/img/defaultText.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="部署星火ai微信助手"/></a><div class="content"><a class="title" href="/2024/06/18/%E9%83%A8%E7%BD%B2%E6%98%9F%E7%81%ABai%E5%BE%AE%E4%BF%A1%E5%8A%A9%E6%89%8B/" title="部署星火ai微信助手">部署星火ai微信助手</a><time datetime="2024-06-17T23:18:40.000Z" title="发表于 2024-06-18 07:18:40">2024-06-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/15/androidStudio%E7%9A%84%E6%90%AD%E5%BB%BA/" title="androidStudio的搭建"><img src="https://www.gstatic.cn/devrel-devsite/prod/vcb16788a46369f41192d8988c5149cea86bddfebb91a7fb85ede926f44da4a35/android/images/lockup.svg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="androidStudio的搭建"/></a><div class="content"><a class="title" href="/2024/06/15/androidStudio%E7%9A%84%E6%90%AD%E5%BB%BA/" title="androidStudio的搭建">androidStudio的搭建</a><time datetime="2024-06-15T00:50:45.000Z" title="发表于 2024-06-15 08:50:45">2024-06-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/12/butterfly%E6%B7%B1%E8%89%B2%E6%A8%A1%E5%BC%8F%E8%83%8C%E6%99%AF%E7%BE%8E%E5%8C%96/" title="butterfly深色模式背景美化"><img src="https://s.cn.bing.net/th?id=OHR.BigBendMilkyWay_ZH-CN7709015605_1920x1080.jpg" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="butterfly深色模式背景美化"/></a><div class="content"><a class="title" href="/2024/06/12/butterfly%E6%B7%B1%E8%89%B2%E6%A8%A1%E5%BC%8F%E8%83%8C%E6%99%AF%E7%BE%8E%E5%8C%96/" title="butterfly深色模式背景美化">butterfly深色模式背景美化</a><time datetime="2024-06-12T07:15:40.000Z" title="发表于 2024-06-12 15:15:40">2024-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/07/SVG%E5%AD%A6%E4%B9%A0/" title="SVG学习"><div style="background: blue"></div></a><div class="content"><a class="title" href="/2024/06/07/SVG%E5%AD%A6%E4%B9%A0/" title="SVG学习">SVG学习</a><time datetime="2024-06-06T22:10:21.000Z" title="发表于 2024-06-07 06:10:21">2024-06-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/25/Butterfly%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/" title="hexo详细配置(Butterfly主题)"><img src="/img/Butterfly%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/cover.png" onerror="this.onerror=null;this.src='/images/404.jpg'" alt="hexo详细配置(Butterfly主题)"/></a><div class="content"><a class="title" href="/2024/05/25/Butterfly%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/" title="hexo详细配置(Butterfly主题)">hexo详细配置(Butterfly主题)</a><time datetime="2024-05-25T03:55:29.555Z" title="发表于 2024-05-25 11:55:29">2024-05-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Muyin</div><div class="framework-info"><span>框架 </span><a href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">欢迎观看我的<a href="https://codersunny.com">博客</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><canvas id="universe"></canvas><script src="/js/universe.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
